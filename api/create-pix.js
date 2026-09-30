@@ -6,8 +6,19 @@ const PRODUCTS = {
   "rbx-80": { name: "80 Robux", price: 4.00 },
   "rbx-400": { name: "400 Robux", price: 14.49 }
 };
-
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "https://adrianorodriguesnascimento4-wq.github.io",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
 module.exports = async (req, res) => {
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    res.setHeader(key, value);
+  });
+
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  } 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
   }
